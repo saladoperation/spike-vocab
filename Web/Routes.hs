@@ -12,3 +12,6 @@ instance AutoRoute UsersController
 
 instance AutoRoute SearchesController
 
+
+instance AutoRoute EntriesController
+
