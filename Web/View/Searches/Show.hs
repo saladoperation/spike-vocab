@@ -1,9 +1,13 @@
 module Web.View.Searches.Show where
 import Web.View.Prelude
 
-data ShowView = ShowView { keyword :: Text }
+data ShowView = ShowView { keyword :: Text, entries :: [Entry] }
 
 instance View ShowView where
     html ShowView { .. } = [hsx|
-        <h1>Show Search</h1>
+        <ol>{forEach entries renderEntry}</ol>
     |]
+        where
+            renderEntry entry = [hsx|
+                <li>{get #title entry}</li>
+            |]
