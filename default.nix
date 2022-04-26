@@ -17,6 +17,8 @@ let
             # Native dependencies, e.g. imagemagick
         ];
         projectPath = ./.;
+        
+        withHoogle = true;
     };
 in
     haskellEnv
