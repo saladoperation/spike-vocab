@@ -10,6 +10,12 @@ data WebApplication = WebApplication deriving (Eq, Show)
 
 data StaticController = WelcomeAction deriving (Eq, Show, Data)
 
+data SessionsController
+    = NewSessionAction
+    | CreateSessionAction
+    | DeleteSessionAction
+    deriving (Eq, Show, Data)
+
 instance HasNewSessionUrl User where
     newSessionUrl _ = "/NewSession"
 
