@@ -11,12 +11,17 @@ instance Controller UsersController where
     action CreateUserAction = do
         let user = newRecord @User
         user
-            |> buildUser
+            |> fill @["email", "passwordHash"]
+            |> validateField #email isEmail
+            |> validateField #passwordHash nonEmpty
             |> ifValid \case
-                Left user -> render NewView { .. } 
+                Left user -> render NewView { .. }
                 Right user -> do
-                    user <- user |> createRecord
-                    setSuccessMessage "User created"
+                    hashed <- hashPassword (get #passwordHash user)
+                    user <- user
+                        |> set #passwordHash hashed
+                        |> createRecord
+                    setSuccessMessage "You have registered successfully"
                     redirectToPath "/"
 
 buildUser user = user
