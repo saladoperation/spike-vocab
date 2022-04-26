@@ -24,3 +24,11 @@ data UsersController
     = NewUserAction
     | CreateUserAction
     deriving (Eq, Show, Data)
+
+data SearchesController
+    = ShowSearchAction { keyword :: Text }
+    deriving (Eq, Show, Data)
+
+data EntriesController
+    = ShowEntryAction { entryId :: !(Id Entry) }
+    deriving (Eq, Show, Data)
