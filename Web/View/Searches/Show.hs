@@ -18,5 +18,5 @@ instance View ShowView where
 renderKeyword keyword match = if match
     then [hsx||]
     else [hsx|
-    <li>{keyword}</li>
+    <li><a href={NewEntryAction}>{keyword}</a></li>
     |]
