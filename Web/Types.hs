@@ -20,3 +20,7 @@ instance HasNewSessionUrl User where
     newSessionUrl _ = "/NewSession"
 
 type instance CurrentUserRecord = User
+data UsersController
+    = NewUserAction
+    | CreateUserAction
+    deriving (Eq, Show, Data)

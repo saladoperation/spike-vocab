@@ -7,3 +7,5 @@ instance AutoRoute SessionsController
 
 -- Generator Marker
 instance AutoRoute StaticController
+instance AutoRoute UsersController
+
