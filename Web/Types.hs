@@ -31,4 +31,5 @@ data SearchesController
 
 data EntriesController
     = ShowEntryAction { entryId :: !(Id Entry) }
+    | NewEntryAction
     deriving (Eq, Show, Data)
