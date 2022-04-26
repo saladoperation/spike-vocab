@@ -12,7 +12,7 @@ instance View ShowView where
     |]
         where
             renderEntry entry = [hsx|
-                <li>{get #title entry}</li>
+                <li><a href={ShowEntryAction (get #id entry)}>{get #title entry}</a></li>
             |]
 
 renderKeyword keyword match = if match
