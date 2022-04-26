@@ -26,5 +26,6 @@ renderForm user = [hsx|
             <input name="password" type="password" class="form-control" placeholder="Password"/>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Login</button>
+        <a href={NewUserAction}>Sign Up</a>
     </form>
 |]
