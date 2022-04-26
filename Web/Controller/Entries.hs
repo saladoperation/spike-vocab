@@ -4,7 +4,7 @@ import Web.Controller.Prelude
 import Web.View.Entries.Show
 
 instance Controller EntriesController where
-    action NewEntryAction = do
+    action NewEntryAction { title }  = do
         redirectToPath "/"
 
     action ShowEntryAction { entryId } = do

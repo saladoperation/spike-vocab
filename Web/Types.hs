@@ -31,5 +31,5 @@ data SearchesController
 
 data EntriesController
     = ShowEntryAction { entryId :: !(Id Entry) }
-    | NewEntryAction
+    | NewEntryAction { title :: Text }
     deriving (Eq, Show, Data)
