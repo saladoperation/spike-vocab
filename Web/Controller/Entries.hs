@@ -30,6 +30,7 @@ instance Controller EntriesController where
         let entry = newRecord @Entry
         entry
             |> fill @'["title"]
+            |> validateField #title nonEmpty
             |> ifValid \case
                 Left entry -> render NewView { .. } 
                 Right entry -> do
