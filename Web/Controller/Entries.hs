@@ -9,7 +9,6 @@ import qualified Data.Text.Read as Read
 
 instance Controller EntriesController where
     action CreateEntryAction = do
-        let entry = newRecord @Entry
         let maybeExample = do
             uri <- param @Text "url"
                 |> T.unpack
@@ -28,6 +27,7 @@ instance Controller EntriesController where
                 |> set #youtubeId youtubeId
                 |> set #start start
                 |> pure
+        let entry = newRecord @Entry
         entry
             |> fill @'["title"]
             |> ifValid \case
