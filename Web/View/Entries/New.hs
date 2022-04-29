@@ -12,9 +12,7 @@ instance View NewView where
 renderForm :: Entry -> Html
 renderForm entry = formFor entry [hsx|
     {(hiddenField #title)}
-    <div class="form-group">
-        <input name="url" type="url" class="form-control" placeholder="URL" required="required" autofocus="autofocus"/>
-    </div>
+    {youtubeUrl}
     {submitButton}
 
 |]

@@ -41,4 +41,5 @@ data ExamplesController
 
     | UpdateExampleAction { exampleId :: !(Id Example) }
 
+    | NewExampleAction { entryId :: !(Id Entry) }
     deriving (Eq, Show, Data)

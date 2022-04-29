@@ -3,13 +3,21 @@ module Web.Controller.Examples where
 import Web.Controller.Prelude
 import Web.Controller.Entries ()
 import Web.View.Entries.Show
-import Web.View.Entries.New
+import qualified Web.View.Entries.New as NewEntryView
+import Web.View.Examples.New
 import Web.View.Examples.Edit
 import qualified Data.Text as T
 import qualified Network.URI as URI
 import qualified Data.Text.Read as Read
 
 instance Controller ExamplesController where
+    action NewExampleAction { entryId } = do
+        let example = newRecord @Example
+                        |> set #entryId entryId
+        setModal NewView { .. }
+
+        jumpToAction ShowEntryAction { .. }
+
     action UpdateExampleAction { exampleId } = do
         example <- fetch exampleId
         let entryId = get #entryId example
@@ -40,7 +48,7 @@ instance Controller ExamplesController where
                 entry <- fetch entryId
                 deleteRecord entry
                 setSuccessMessage "Entry deleted"
-                render NewView { .. }
+                render NewEntryView.NewView { .. }
             else do
                 entry <- fetch entryId
                     >>= fetchRelated #examples

@@ -7,7 +7,7 @@ instance View ShowView where
     html ShowView { .. } = [hsx|
         <h1>{get #title entry}</h1>
         <p>{forEach (get #examples entry) renderExample}</p>
-
+        <div><a href={get #id entry |> NewExampleAction} class="mr-2">Create</a></div>
     |]
 
 renderExample example = [hsx|
