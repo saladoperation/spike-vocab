@@ -5,14 +5,17 @@ import Web.Controller.Entries ()
 import Web.View.Entries.Show
 import Web.View.Entries.New
 import Web.View.Examples.Edit
+import qualified Data.Text as T
+import qualified Network.URI as URI
+import qualified Data.Text.Read as Read
 
 instance Controller ExamplesController where
     action UpdateExampleAction { exampleId } = do
         example <- fetch exampleId
         let entryId = get #entryId example
-        example
-            |> buildExample
-            |> ifValid \case
+        case maybeExample example of
+            Nothing -> render EditView { .. }
+            Just example -> example |> ifValid \case
                 Left example -> render EditView { .. }
                 Right example -> do
                     example <- example |> updateRecord
@@ -44,6 +47,3 @@ instance Controller ExamplesController where
                 deleteRecord example
                 setSuccessMessage "Example deleted"
                 render ShowView { .. }
-
-buildExample example = example
-    |> fill @["youtubeId", "start"]

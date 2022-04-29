@@ -17,8 +17,9 @@ instance View EditView where
 
 renderForm :: Example -> Html
 renderForm example = formFor example [hsx|
-    {(textField #youtubeId)}
-    {(textField #start)}
+    <div class="form-group">
+        <input name="url" type="url" class="form-control" value={"https://youtu.be/" <> get #youtubeId example <> "?t=" <> get #start example |> show} required="required" autofocus="autofocus"/>
+    </div>
     {submitButton}
 
 |]

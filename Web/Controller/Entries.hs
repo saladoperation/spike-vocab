@@ -10,25 +10,7 @@ import qualified Data.Text.Read as Read
 instance Controller EntriesController where
     action CreateEntryAction = do
         ensureIsUser
-        let maybeExample = do
-            uri <- param @Text "url"
-                |> T.unpack
-                |> URI.parseURI
-            let youtubeId = URI.uriPath uri
-                            |> T.pack
-                            |> T.tail
-            start <- case URI.uriQuery uri
-                        |> T.pack
-                        |> T.drop 3
-                        |> Read.decimal of
-                        Right (start, _) -> Just start
-                        Left _ -> Nothing
-            newRecord @Example
-                |> set #userId currentUserId
-                |> set #youtubeId youtubeId
-                |> set #start start
-                |> validateField #youtubeId nonEmpty
-                |> pure
+        let example = newRecord @Example
         let entry = newRecord @Entry
         entry
             |> fill @'["title"]
@@ -36,7 +18,7 @@ instance Controller EntriesController where
             |> ifValid \case
                 Left entry -> render NewView { .. } 
                 Right entry -> do
-                    case maybeExample of
+                    case maybeExample example of
                         Nothing -> render NewView { .. } 
                         Just example -> example |> ifValid \case
                             Left example -> render NewView { .. }
