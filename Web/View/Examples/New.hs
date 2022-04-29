@@ -17,6 +17,7 @@ instance View NewView where
 
 renderForm :: Example -> Html
 renderForm example = formFor example [hsx|
+    {(hiddenField #entryId)}
     {youtubeUrl}
     {submitButton}
 

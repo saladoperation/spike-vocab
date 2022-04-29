@@ -11,6 +11,20 @@ import qualified Network.URI as URI
 import qualified Data.Text.Read as Read
 
 instance Controller ExamplesController where
+    action CreateExampleAction = do
+        let example = newRecord @Example
+                        |> buildExample
+                        |> set #userId currentUserId
+        let entryId = get #entryId example
+        case maybeExample example of
+            Nothing -> redirectTo ShowEntryAction { .. }
+            Just example -> example |> ifValid \case
+                Left example -> render NewView { .. } 
+                Right example -> do
+                    example <- example |> createRecord
+                    setSuccessMessage "Example created"
+                    redirectTo ShowEntryAction { .. }
+
     action NewExampleAction { entryId } = do
         let example = newRecord @Example
                         |> set #entryId entryId
@@ -55,3 +69,6 @@ instance Controller ExamplesController where
                 deleteRecord example
                 setSuccessMessage "Example deleted"
                 render ShowView { .. }
+
+buildExample example = example
+                        |> fill @'["entryId"]

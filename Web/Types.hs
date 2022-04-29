@@ -42,4 +42,5 @@ data ExamplesController
     | UpdateExampleAction { exampleId :: !(Id Example) }
 
     | NewExampleAction { entryId :: !(Id Entry) }
+    | CreateExampleAction
     deriving (Eq, Show, Data)
