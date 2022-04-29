@@ -3,8 +3,25 @@ module Web.Controller.Examples where
 import Web.Controller.Prelude
 import Web.View.Entries.Show
 import Web.View.Entries.New
+import Web.View.Examples.Edit
 
 instance Controller ExamplesController where
+    action UpdateExampleAction { exampleId } = do
+        example <- fetch exampleId
+        let entryId = get #entryId example
+        example
+            |> buildExample
+            |> ifValid \case
+                Left example -> render EditView { .. }
+                Right example -> do
+                    example <- example |> updateRecord
+                    setSuccessMessage "Example updated"
+                    redirectTo ShowEntryAction { .. }
+
+    action EditExampleAction { exampleId } = do
+        example <- fetch exampleId
+        render EditView { .. }
+
     action DeleteExampleAction { exampleId } = do
         example <- fetch exampleId
         let entryId = get #entryId example
@@ -23,3 +40,6 @@ instance Controller ExamplesController where
                 deleteRecord example
                 setSuccessMessage "Example deleted"
                 render ShowView { .. }
+
+buildExample example = example
+    |> fill @["youtubeId", "start"]

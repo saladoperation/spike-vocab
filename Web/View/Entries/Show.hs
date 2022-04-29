@@ -22,4 +22,9 @@ renderButtons example =
                 then pure user
                 else Nothing of 
         Nothing -> [hsx||]
-        Just user -> [hsx|<div><a class="mr-2">Edit</a><a href={DeleteExampleAction (get #id example)} class="js-delete">Delete</a></div>|] 
+        Just user -> [hsx|
+        <div>
+            <a href={EditExampleAction(get #id example)} class="mr-2">Edit</a>
+            <a href={DeleteExampleAction (get #id example)} class="js-delete">Delete</a>
+        </div>
+        |] 

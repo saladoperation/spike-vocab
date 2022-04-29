@@ -37,4 +37,8 @@ data EntriesController
 
 data ExamplesController
     = DeleteExampleAction { exampleId :: !(Id Example) }
+    | EditExampleAction { exampleId :: !(Id Example) }
+
+    | UpdateExampleAction { exampleId :: !(Id Example) }
+
     deriving (Eq, Show, Data)
