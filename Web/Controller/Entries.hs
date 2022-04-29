@@ -10,7 +10,6 @@ import qualified Data.Text.Read as Read
 instance Controller EntriesController where
     action CreateEntryAction = do
         ensureIsUser
-        let entry = newRecord @Entry
         let maybeExample = do
             uri <- param @Text "url"
                 |> T.unpack
@@ -30,6 +29,7 @@ instance Controller EntriesController where
                 |> set #start start
                 |> validateField #youtubeId nonEmpty
                 |> pure
+        let entry = newRecord @Entry
         entry
             |> fill @'["title"]
             |> validateField #title nonEmpty
