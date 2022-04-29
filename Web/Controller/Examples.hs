@@ -64,10 +64,10 @@ instance Controller ExamplesController where
                 setSuccessMessage "Entry deleted"
                 render NewEntryView.NewView { .. }
             else do
-                entry <- fetch entryId
-                    >>= fetchRelated #examples
                 deleteRecord example
                 setSuccessMessage "Example deleted"
+                entry <- fetch entryId
+                    >>= fetchRelated #examples
                 render ShowView { .. }
 
 buildExample example = example
