@@ -19,5 +19,5 @@ CREATE TABLE examples (
 );
 CREATE INDEX examples_user_id_index ON examples (user_id);
 CREATE INDEX examples_entry_id_index ON examples (entry_id);
-ALTER TABLE examples ADD CONSTRAINT examples_ref_entry_id FOREIGN KEY (entry_id) REFERENCES entries (id) ON DELETE NO ACTION;
+ALTER TABLE examples ADD CONSTRAINT examples_ref_entry_id FOREIGN KEY (entry_id) REFERENCES entries (id) ON DELETE CASCADE;
 ALTER TABLE examples ADD CONSTRAINT examples_ref_user_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE NO ACTION;
