@@ -9,6 +9,8 @@ import qualified Data.Text.Read as Read
 
 instance Controller EntriesController where
     action CreateEntryAction = do
+        ensureIsUser
+        let entry = newRecord @Entry
         let maybeExample = do
             uri <- param @Text "url"
                 |> T.unpack
@@ -26,18 +28,28 @@ instance Controller EntriesController where
                 |> set #userId currentUserId
                 |> set #youtubeId youtubeId
                 |> set #start start
+                |> validateField #youtubeId nonEmpty
                 |> pure
-        let entry = newRecord @Entry
         entry
             |> fill @'["title"]
             |> validateField #title nonEmpty
             |> ifValid \case
                 Left entry -> render NewView { .. } 
                 Right entry -> do
-                    entry <- entry |> createRecord
-                    setSuccessMessage "Entry created"
-                    let entryId = get #id entry
-                    redirectTo ShowEntryAction { .. }
+                    case maybeExample of
+                        Nothing -> render NewView { .. } 
+                        Just example -> example |> ifValid \case
+                            Left example -> render NewView { .. }
+                            Right example -> do
+                                entry <- withTransaction do
+                                    entry <- entry |> createRecord
+                                    example 
+                                        |> set #entryId (get #id entry)
+                                        |> createRecord
+                                    pure entry
+                                let entryId = get #id entry
+                                setSuccessMessage "Entry created"
+                                redirectTo ShowEntryAction { .. }
 
     action NewEntryAction { title }  = do
         let entry = newRecord |> set #title title
