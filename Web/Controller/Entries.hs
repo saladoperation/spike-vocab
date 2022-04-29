@@ -57,4 +57,5 @@ instance Controller EntriesController where
 
     action ShowEntryAction { entryId } = do
         entry <- fetch entryId
+            >>= fetchRelated #examples
         render ShowView { .. }
