@@ -1,6 +1,7 @@
 module Web.Controller.Examples where
 
 import Web.Controller.Prelude
+import Web.Controller.Entries ()
 import Web.View.Entries.Show
 import Web.View.Entries.New
 import Web.View.Examples.Edit
@@ -20,7 +21,10 @@ instance Controller ExamplesController where
 
     action EditExampleAction { exampleId } = do
         example <- fetch exampleId
-        render EditView { .. }
+        setModal EditView { .. }
+        let entryId = get #entryId example
+
+        jumpToAction ShowEntryAction { .. }
 
     action DeleteExampleAction { exampleId } = do
         example <- fetch exampleId
