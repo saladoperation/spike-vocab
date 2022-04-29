@@ -81,7 +81,7 @@ navbar = [hsx|
     <span class="navbar-toggler-icon"></span>
   </button>
   <form method="GET" action={ShowSearchAction ""} class="form-inline my-2 my-lg-0" >
-    <input name="keyword" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <input name="keyword" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required>
   </form>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
