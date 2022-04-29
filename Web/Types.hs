@@ -34,3 +34,7 @@ data EntriesController
     | NewEntryAction { title :: Text }
     | CreateEntryAction
     deriving (Eq, Show, Data)
+
+data ExamplesController
+    = DeleteExampleAction { exampleId :: !(Id Example) }
+    deriving (Eq, Show, Data)
