@@ -15,3 +15,6 @@ instance AutoRoute SearchesController
 
 instance AutoRoute EntriesController
 
+
+instance AutoRoute ExamplesController
+

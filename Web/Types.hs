@@ -31,4 +31,16 @@ data SearchesController
 
 data EntriesController
     = ShowEntryAction { entryId :: !(Id Entry) }
+    | NewEntryAction { title :: Text }
+    | CreateEntryAction
+    deriving (Eq, Show, Data)
+
+data ExamplesController
+    = DeleteExampleAction { exampleId :: !(Id Example) }
+    | EditExampleAction { exampleId :: !(Id Example) }
+
+    | UpdateExampleAction { exampleId :: !(Id Example) }
+
+    | NewExampleAction { entryId :: !(Id Entry) }
+    | CreateExampleAction
     deriving (Eq, Show, Data)
