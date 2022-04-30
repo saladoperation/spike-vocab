@@ -8,6 +8,8 @@ import Web.View.Examples.New
 import Web.View.Examples.Edit
 
 instance Controller ExamplesController where
+    beforeAction = ensureIsUser
+
     action CreateExampleAction = do
         let example = newRecord @Example
                         |> buildExample
