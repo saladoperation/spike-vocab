@@ -33,6 +33,7 @@ instance Controller ExamplesController where
 
     action UpdateExampleAction { exampleId } = do
         example <- fetch exampleId
+        accessDeniedUnless (get #userId example == currentUserId)
         let entryId = get #entryId example
         case maybeExample example of
             Nothing -> render EditView { .. }
@@ -52,6 +53,7 @@ instance Controller ExamplesController where
 
     action DeleteExampleAction { exampleId } = do
         example <- fetch exampleId
+        accessDeniedUnless (get #userId example == currentUserId)
         let entryId = get #entryId example
         count <- query @Example
             |> filterWhere (#entryId, entryId)
