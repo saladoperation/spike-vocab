@@ -32,6 +32,7 @@ instance Controller EntriesController where
                                 redirectTo ShowEntryAction { .. }
 
     action NewEntryAction { title }  = do
+        ensureIsUser
         let entry = newRecord |> set #title title
         render NewView { .. }
 
