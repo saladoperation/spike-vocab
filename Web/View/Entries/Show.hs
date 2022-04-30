@@ -11,7 +11,7 @@ instance View ShowView where
     |]
 
 renderExample example = [hsx|
-    <iframe allowfullscreen="" frameborder="0" height="315" src={"https://www.youtube.com/embed/" <> get #youtubeId example <> "?start=" <> get #start example |> show} width="420"></iframe>
+    <div><iframe allowfullscreen="" frameborder="0" height="315" src={"https://www.youtube.com/embed/" <> get #youtubeId example <> "?start=" <> get #start example |> show} width="420"></iframe></div>
     {renderButtons example}
 |]
 

@@ -6,11 +6,10 @@ import Web.View.Entries.Show
 import qualified Web.View.Entries.New as NewEntryView
 import Web.View.Examples.New
 import Web.View.Examples.Edit
-import qualified Data.Text as T
-import qualified Network.URI as URI
-import qualified Data.Text.Read as Read
 
 instance Controller ExamplesController where
+    beforeAction = ensureIsUser
+
     action CreateExampleAction = do
         let example = newRecord @Example
                         |> buildExample
@@ -34,6 +33,7 @@ instance Controller ExamplesController where
 
     action UpdateExampleAction { exampleId } = do
         example <- fetch exampleId
+        accessDeniedUnless (get #userId example == currentUserId)
         let entryId = get #entryId example
         case maybeExample example of
             Nothing -> render EditView { .. }
@@ -53,6 +53,7 @@ instance Controller ExamplesController where
 
     action DeleteExampleAction { exampleId } = do
         example <- fetch exampleId
+        accessDeniedUnless (get #userId example == currentUserId)
         let entryId = get #entryId example
         count <- query @Example
             |> filterWhere (#entryId, entryId)
