@@ -3,14 +3,12 @@ module Web.Controller.Entries where
 import Web.Controller.Prelude
 import Web.View.Entries.Show
 import Web.View.Entries.New
-import qualified Data.Text as T
-import qualified Network.URI as URI
-import qualified Data.Text.Read as Read
 
 instance Controller EntriesController where
     action CreateEntryAction = do
         ensureIsUser
         let example = newRecord @Example
+                        |> set #userId currentUserId
         let entry = newRecord @Entry
         entry
             |> fill @'["title"]
@@ -34,6 +32,7 @@ instance Controller EntriesController where
                                 redirectTo ShowEntryAction { .. }
 
     action NewEntryAction { title }  = do
+        ensureIsUser
         let entry = newRecord |> set #title title
         render NewView { .. }
 
