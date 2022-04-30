@@ -8,6 +8,7 @@ instance Controller EntriesController where
     action CreateEntryAction = do
         ensureIsUser
         let example = newRecord @Example
+                        |> set #userId currentUserId
         let entry = newRecord @Entry
         entry
             |> fill @'["title"]
