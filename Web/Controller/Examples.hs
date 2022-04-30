@@ -6,9 +6,6 @@ import Web.View.Entries.Show
 import qualified Web.View.Entries.New as NewEntryView
 import Web.View.Examples.New
 import Web.View.Examples.Edit
-import qualified Data.Text as T
-import qualified Network.URI as URI
-import qualified Data.Text.Read as Read
 
 instance Controller ExamplesController where
     action CreateExampleAction = do

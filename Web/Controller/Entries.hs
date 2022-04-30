@@ -3,9 +3,6 @@ module Web.Controller.Entries where
 import Web.Controller.Prelude
 import Web.View.Entries.Show
 import Web.View.Entries.New
-import qualified Data.Text as T
-import qualified Network.URI as URI
-import qualified Data.Text.Read as Read
 
 instance Controller EntriesController where
     action CreateEntryAction = do
